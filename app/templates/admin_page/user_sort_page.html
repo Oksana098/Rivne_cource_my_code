@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block sort_page %}
+	<h1>Welcome to the Admin page</h1>
+<form action="/user_sort_page" method="POST">
+	<table class="user_table">
+		<tr>
+			<th class="user_table-cell">Id</th>
+			<th class="user_table-cell">User</th>
+			<th class="user_table-cell">Alias</th>
+			<th class="user_table-cell">E-mail</th>
+            <th class="user_table-cell">Role
+            <input type="checkbox" name="role_checkbox" value="role_id"/></th>
+			<th class="user_table-cell">Avatar</th>
+			<th class="user_table-cell">Delete date
+                <input type="checkbox" name="delete_date_checkbox" value="delete_date"/></th>
+			<th class="user_table-cell">ID User</th>
+		</tr>
+
+		{% for user in users %}
+		<tr>
+			<td class="user_table-cell">{{ user.id }}</td>
+			<td class="user_table-cell">{{ user.name }}</td>
+			<td class="user_table-cell">{{ user.alias }}</td>
+			<td class="user_table-cell">{{ user.email }}</td>
+			<td class="user_table-cell">{{ user.role_id }}</td>
+			<td class="user_table-cell">{{ user.avatar }}</td>
+			<td class="user_table-cell">{{ user.delete_date }}</td>
+			<td class="user_table-cell"><a href="/my_filter?id={{ user.id }}">Edit</a></td>
+		</tr>
+
+		{% endfor %}
+	</table>
+
+    <input type="submit" name="Sort" value="Sort">
+
+    </form>
+	<a href="/user_form" class="button">Add new user</a>
+{% endblock %}
