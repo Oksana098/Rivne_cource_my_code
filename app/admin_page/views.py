@@ -56,3 +56,33 @@ def user_edit():
 
         db.session.commit()
         return redirect(url_for('user_page'))
+
+
+@app.route('/user_sort_page', methods=['GET', 'POST'])
+def user_sort_page():
+    data = None
+    users = None
+
+    if request.method == 'GET':
+        users = db.session.query(User).all()
+
+    if request.method == 'POST':
+        data = request.form.to_dict()
+
+    if data:
+        if 'delete_date_checkbox' in data and 'role_checkbox' in data:
+            users = db.session.query(User) \
+                .order_by(User.role_id, User.delete_date).all()
+
+        elif 'delete_date_checkbox' in data:
+            users = db.session.query(User) \
+                .order_by(User.delete_date).all()
+
+        elif 'role_checkbox' in data:
+            users = db.session.query(User) \
+                .order_by(User.role_id).all()
+        else:
+            users = db.session.query(User) \
+                .order_by(User.role_id).all()
+
+    return render_template('admin_page/user_sort_page.html', users=users)
